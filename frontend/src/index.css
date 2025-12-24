@@ -1,0 +1,1190 @@
+/* ========================================
+   TEMA FUTURÍSTICO - DIAGNÓSTICO BOLSA
+   ======================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Rajdhani:wght@400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #0a0e17;
+  --bg-secondary: #111827;
+  --bg-card: rgba(17, 24, 39, 0.8);
+  --glass: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --text-primary: #f0f4f8;
+  --text-secondary: #94a3b8;
+  --accent-cyan: #00f5ff;
+  --accent-magenta: #ff00ff;
+  --accent-green: #00ff88;
+  --accent-red: #ff3366;
+  --accent-yellow: #ffcc00;
+  --glow-cyan: 0 0 20px rgba(0, 245, 255, 0.5);
+  --glow-magenta: 0 0 20px rgba(255, 0, 255, 0.5);
+  --glow-green: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+body {
+  font-family: 'Rajdhani', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-primary);
+  background-image:
+    radial-gradient(ellipse at top, rgba(0, 245, 255, 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at bottom right, rgba(255, 0, 255, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+  min-height: 100vh;
+  color: var(--text-primary);
+  line-height: 1.6;
+}
+
+/* Grid de fundo animado */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image:
+    linear-gradient(rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+/* ========== HEADER ========== */
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  padding: 2rem 0;
+}
+
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottom: 0.5rem;
+  text-shadow: var(--glow-cyan);
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+@keyframes glow-pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.2); }
+}
+
+.header p {
+  color: var(--text-secondary);
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* ========== SEARCH FORM ========== */
+.search-form {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+  padding: 1.5rem;
+  background: var(--glass);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  backdrop-filter: blur(10px);
+}
+
+/* Autocomplete Container */
+.autocomplete-container {
+  position: relative;
+}
+
+.autocomplete-container input {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 500;
+  letter-spacing: 2px;
+  background: var(--bg-secondary);
+  border: 2px solid var(--glass-border);
+  border-radius: 12px;
+  width: 240px;
+  color: var(--accent-cyan);
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.autocomplete-container input::placeholder {
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: 1px;
+}
+
+.autocomplete-container input:focus {
+  outline: none;
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan), inset 0 0 20px rgba(0, 245, 255, 0.1);
+}
+
+.autocomplete-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  right: 0;
+  background: var(--bg-secondary);
+  border: 2px solid var(--accent-cyan);
+  border-radius: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+  z-index: 1000;
+  box-shadow: var(--glow-cyan), 0 10px 40px rgba(0, 0, 0, 0.5);
+  animation: dropdown-appear 0.2s ease-out;
+}
+
+@keyframes dropdown-appear {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.autocomplete-item {
+  display: flex;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.autocomplete-item:last-child {
+  border-bottom: none;
+}
+
+.autocomplete-item:hover,
+.autocomplete-item.selected {
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.2) 0%, rgba(255, 0, 255, 0.1) 100%);
+}
+
+.autocomplete-item:hover .ticker-symbol,
+.autocomplete-item.selected .ticker-symbol {
+  color: var(--accent-cyan);
+  text-shadow: var(--glow-cyan);
+}
+
+.ticker-logo {
+  width: 32px;
+  height: 32px;
+  margin-right: 12px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--glass);
+  padding: 4px;
+}
+
+.ticker-info {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.ticker-symbol {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+}
+
+.ticker-name {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.autocomplete-loading {
+  padding: 1.25rem;
+  text-align: center;
+  color: var(--accent-cyan);
+  font-size: 0.9rem;
+}
+
+.search-form select {
+  padding: 1rem 1.25rem;
+  font-size: 1rem;
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  background: var(--bg-secondary);
+  border: 2px solid var(--glass-border);
+  border-radius: 12px;
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 130px;
+}
+
+.search-form select:focus {
+  outline: none;
+  border-color: var(--accent-magenta);
+  box-shadow: var(--glow-magenta);
+}
+
+.search-form select option {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+}
+
+.search-form button {
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  background: linear-gradient(135deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
+  color: var(--bg-primary);
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.search-form button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.search-form button:hover:not(:disabled)::before {
+  left: 100%;
+}
+
+.search-form button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--glow-cyan), var(--glow-magenta);
+}
+
+.search-form button:disabled {
+  background: var(--text-secondary);
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* ========== CHART ========== */
+.chart-container {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-magenta), var(--accent-cyan));
+  background-size: 200% 100%;
+  animation: gradient-flow 3s linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+.chart-container h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* ========== METRICS ========== */
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: var(--bg-card);
+  padding: 1.75rem;
+  border-radius: 16px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: var(--accent-cyan);
+}
+
+.metric-card:nth-child(2)::before {
+  background: var(--accent-yellow);
+}
+
+.metric-card:nth-child(3)::before {
+  background: var(--accent-magenta);
+}
+
+.metric-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-cyan);
+  box-shadow: 0 10px 40px rgba(0, 245, 255, 0.2);
+}
+
+.metric-card h4 {
+  font-family: 'Rajdhani', sans-serif;
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 0.75rem;
+}
+
+.metric-card .value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.metric-card .value.positive {
+  color: var(--accent-green);
+  text-shadow: var(--glow-green);
+}
+
+.metric-card .value.negative {
+  color: var(--accent-red);
+  text-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+}
+
+.metric-card .value.neutral {
+  color: var(--accent-yellow);
+  text-shadow: 0 0 20px rgba(255, 204, 0, 0.5);
+}
+
+/* ========== DIAGNOSIS ========== */
+.diagnosis {
+  background: var(--bg-card);
+  padding: 2rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(10px);
+  margin-bottom: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.diagnosis::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(180deg, var(--accent-cyan) 0%, var(--accent-magenta) 100%);
+}
+
+.diagnosis h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent-cyan);
+  margin-bottom: 1.25rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.diagnosis p {
+  white-space: pre-line;
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+/* ========== DISCLAIMER ========== */
+.disclaimer {
+  text-align: center;
+  padding: 1.25rem;
+  background: rgba(255, 204, 0, 0.1);
+  border: 1px solid rgba(255, 204, 0, 0.3);
+  border-radius: 12px;
+  color: var(--accent-yellow);
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+/* ========== LOADING ========== */
+.loading {
+  text-align: center;
+  padding: 4rem;
+  color: var(--accent-cyan);
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* ========== ERROR ========== */
+.error {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 51, 102, 0.1);
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  border-radius: 16px;
+  color: var(--accent-red);
+  font-weight: 500;
+}
+
+/* ========== EMPTY STATE ========== */
+.empty-state {
+  text-align: center;
+  padding: 5rem 2rem;
+  color: var(--text-secondary);
+}
+
+.empty-state h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.25rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.empty-state p {
+  font-size: 1rem;
+  color: var(--accent-cyan);
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-secondary);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--accent-cyan), var(--accent-magenta));
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-cyan);
+}
+
+/* ========== MARKET OVERVIEW ========== */
+.market-overview {
+  margin-bottom: 3rem;
+}
+
+.market-loading {
+  text-align: center;
+  padding: 2rem;
+  color: var(--accent-cyan);
+  font-family: 'Orbitron', sans-serif;
+}
+
+/* Indices Bar */
+.indices-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.index-card {
+  background: linear-gradient(135deg, rgba(0, 245, 255, 0.1) 0%, rgba(255, 0, 255, 0.05) 100%);
+  border: 1px solid var(--glass-border);
+  border-radius: 16px;
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.index-card:hover {
+  border-color: var(--accent-cyan);
+  box-shadow: var(--glow-cyan);
+  transform: translateY(-3px);
+}
+
+.index-name {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  letter-spacing: 2px;
+  margin-bottom: 0.5rem;
+}
+
+.index-value {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.index-change {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.index-change.positive {
+  color: var(--accent-green);
+}
+
+.index-change.negative {
+  color: var(--accent-red);
+}
+
+.index-label {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* Market Grid */
+.market-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.market-card {
+  background: var(--bg-card);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.market-card:hover {
+  border-color: var(--accent-cyan);
+}
+
+.market-card.gainers .card-header {
+  background: linear-gradient(90deg, rgba(0, 255, 136, 0.2) 0%, transparent 100%);
+  border-bottom: 2px solid var(--accent-green);
+}
+
+.market-card.losers .card-header {
+  background: linear-gradient(90deg, rgba(255, 51, 102, 0.2) 0%, transparent 100%);
+  border-bottom: 2px solid var(--accent-red);
+}
+
+.market-card.volume .card-header {
+  background: linear-gradient(90deg, rgba(0, 245, 255, 0.2) 0%, transparent 100%);
+  border-bottom: 2px solid var(--accent-cyan);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.25rem;
+}
+
+.card-header h3 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-icon {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.market-card.gainers .card-icon {
+  color: var(--accent-green);
+}
+
+.market-card.losers .card-icon {
+  color: var(--accent-red);
+}
+
+.market-card.volume .card-icon {
+  color: var(--accent-cyan);
+}
+
+/* Stock List */
+.stock-list {
+  padding: 0.5rem;
+}
+
+.stock-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.stock-row:hover {
+  background: rgba(0, 245, 255, 0.1);
+}
+
+.stock-info {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.stock-logo {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  object-fit: contain;
+  background: var(--glass);
+  padding: 4px;
+}
+
+.stock-details {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.stock-symbol {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.stock-name {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 150px;
+}
+
+.stock-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.price-value {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.price-change {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.price-change.positive {
+  color: var(--accent-green);
+}
+
+.price-change.negative {
+  color: var(--accent-red);
+}
+
+/* ========== RESPONSIVE ========== */
+
+/* Desktop grande (> 1200px) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1200px;
+  }
+}
+
+/* Tablet (768px - 1024px) */
+@media (max-width: 1024px) {
+  .container {
+    padding: 1.5rem;
+  }
+
+  .header {
+    margin-bottom: 2rem;
+    padding: 1.5rem 0;
+  }
+
+  .header h1 {
+    font-size: 2rem;
+  }
+
+  .market-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+
+  .indices-bar {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Mobile (481px - 768px) */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    margin-bottom: 1.5rem;
+    padding: 1rem 0;
+  }
+
+  .header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+
+  .header p {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  /* Search Form */
+  .search-form {
+    flex-direction: column;
+    padding: 1rem;
+    gap: 0.75rem;
+  }
+
+  .autocomplete-container {
+    width: 100%;
+  }
+
+  .autocomplete-container input {
+    width: 100%;
+  }
+
+  .search-form select {
+    width: 100%;
+    min-width: unset;
+  }
+
+  .search-form button {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  /* Indices */
+  .indices-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .index-card {
+    padding: 1rem;
+  }
+
+  .index-value {
+    font-size: 1.25rem;
+  }
+
+  /* Market Grid */
+  .market-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .market-card {
+    border-radius: 16px;
+  }
+
+  .card-header {
+    padding: 0.875rem 1rem;
+  }
+
+  .card-header h3 {
+    font-size: 0.8rem;
+  }
+
+  .stock-row {
+    padding: 0.75rem 0.875rem;
+  }
+
+  .stock-name {
+    max-width: 120px;
+  }
+
+  /* Chart */
+  .chart-container {
+    padding: 1.25rem;
+    border-radius: 16px;
+    margin-bottom: 1.5rem;
+  }
+
+  .chart-container h2 {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Metrics */
+  .metrics {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .metric-card {
+    padding: 1.25rem;
+  }
+
+  .metric-card .value {
+    font-size: 1.5rem;
+  }
+
+  /* Diagnosis */
+  .diagnosis {
+    padding: 1.5rem;
+    padding-left: 1.75rem;
+    border-radius: 16px;
+  }
+
+  .diagnosis h3 {
+    font-size: 0.95rem;
+  }
+
+  .diagnosis p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+  }
+
+  /* Loading/Error */
+  .loading {
+    padding: 3rem 1rem;
+    font-size: 1rem;
+  }
+
+  .error {
+    padding: 1.5rem 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+}
+
+/* Mobile pequeno (< 480px) */
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+  }
+
+  .header {
+    margin-bottom: 1rem;
+    padding: 0.75rem 0;
+  }
+
+  .header h1 {
+    font-size: 1.25rem;
+    letter-spacing: 0.5px;
+  }
+
+  .header p {
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+  }
+
+  /* Search Form */
+  .search-form {
+    padding: 0.875rem;
+    gap: 0.625rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+  }
+
+  .autocomplete-container input {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .search-form select {
+    padding: 0.875rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+  }
+
+  .search-form button {
+    padding: 0.875rem;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    letter-spacing: 1px;
+  }
+
+  /* Autocomplete Dropdown */
+  .autocomplete-dropdown {
+    border-radius: 10px;
+    max-height: 250px;
+  }
+
+  .autocomplete-item {
+    padding: 0.75rem;
+  }
+
+  .ticker-logo {
+    width: 28px;
+    height: 28px;
+    margin-right: 10px;
+  }
+
+  .ticker-symbol {
+    font-size: 0.9rem;
+  }
+
+  .ticker-name {
+    font-size: 0.75rem;
+  }
+
+  /* Indices */
+  .indices-bar {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .index-card {
+    padding: 0.875rem 0.75rem;
+    border-radius: 12px;
+  }
+
+  .index-name {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+
+  .index-value {
+    font-size: 1.1rem;
+  }
+
+  .index-change {
+    font-size: 0.85rem;
+  }
+
+  .index-label {
+    font-size: 0.7rem;
+  }
+
+  /* Market Grid */
+  .market-grid {
+    gap: 0.75rem;
+  }
+
+  .market-card {
+    border-radius: 14px;
+  }
+
+  .card-header {
+    padding: 0.75rem 1rem;
+  }
+
+  .card-header h3 {
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+  }
+
+  .card-icon {
+    font-size: 1rem;
+  }
+
+  .stock-list {
+    padding: 0.375rem;
+  }
+
+  .stock-row {
+    padding: 0.625rem 0.75rem;
+    border-radius: 10px;
+  }
+
+  .stock-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+  }
+
+  .stock-symbol {
+    font-size: 0.8rem;
+  }
+
+  .stock-name {
+    font-size: 0.7rem;
+    max-width: 100px;
+  }
+
+  .price-value {
+    font-size: 0.85rem;
+  }
+
+  .price-change {
+    font-size: 0.7rem;
+  }
+
+  /* Chart */
+  .chart-container {
+    padding: 1rem;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .chart-container h2 {
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Metrics */
+  .metrics {
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  .metric-card {
+    padding: 1rem;
+    border-radius: 12px;
+  }
+
+  .metric-card h4 {
+    font-size: 0.75rem;
+    letter-spacing: 1px;
+  }
+
+  .metric-card .value {
+    font-size: 1.35rem;
+  }
+
+  /* Diagnosis */
+  .diagnosis {
+    padding: 1.25rem;
+    padding-left: 1.5rem;
+    border-radius: 14px;
+    margin-bottom: 1rem;
+  }
+
+  .diagnosis::before {
+    width: 3px;
+  }
+
+  .diagnosis h3 {
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+  }
+
+  .diagnosis p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  /* Loading/Error */
+  .loading {
+    padding: 2.5rem 1rem;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+  }
+
+  .error {
+    padding: 1.25rem;
+    font-size: 0.9rem;
+    border-radius: 12px;
+    margin-bottom: 0.75rem;
+  }
+
+  /* Disclaimer */
+  .disclaimer {
+    padding: 0.875rem;
+    font-size: 0.8rem;
+    border-radius: 10px;
+  }
+
+  /* Market Overview */
+  .market-overview {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Altura mínima para gráfico em mobile */
+@media (max-width: 600px) {
+  .recharts-wrapper {
+    min-height: 200px !important;
+  }
+}
