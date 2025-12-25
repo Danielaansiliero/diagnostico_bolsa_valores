@@ -1,3 +1,5 @@
+const API_BASE_URL = import.meta.env.VITE_API_URL || '';
+
 export interface Ticker {
   symbol: string;
   name: string;
@@ -50,7 +52,7 @@ export interface MarketOverview {
 }
 
 export async function getMarketOverview(): Promise<MarketOverview> {
-  const response = await fetch('/api/market-overview');
+  const response = await fetch(`${API_BASE_URL}/api/market-overview`);
 
   if (!response.ok) {
     throw new Error('Erro ao buscar dados do mercado');
@@ -64,7 +66,7 @@ export async function searchTickers(query: string): Promise<Ticker[]> {
     return [];
   }
 
-  const response = await fetch(`/api/tickers/search?q=${encodeURIComponent(query)}&limit=8`);
+  const response = await fetch(`${API_BASE_URL}/api/tickers/search?q=${encodeURIComponent(query)}&limit=8`);
 
   if (!response.ok) {
     return [];
@@ -75,7 +77,7 @@ export async function searchTickers(query: string): Promise<Ticker[]> {
 }
 
 export async function getDiagnostico(symbol: string, period: string): Promise<DiagnosticoResponse> {
-  const response = await fetch(`/api/diagnostico?symbol=${symbol}&period=${period}`);
+  const response = await fetch(`${API_BASE_URL}/api/diagnostico?symbol=${symbol}&period=${period}`);
 
   if (!response.ok) {
     const error = await response.json();
