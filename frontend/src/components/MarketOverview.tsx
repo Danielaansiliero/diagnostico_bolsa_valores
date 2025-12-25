@@ -73,7 +73,11 @@ export function MarketOverview({ onSelectStock }: MarketOverviewProps) {
   if (loading) {
     return (
       <div className="market-overview">
-        <div className="market-loading">Carregando dados do mercado...</div>
+        <div className="market-loading">
+          <div className="loading-spinner"></div>
+          <p>Carregando dados do mercado...</p>
+          <span className="loading-hint">A primeira requisição pode levar alguns segundos</span>
+        </div>
       </div>
     );
   }

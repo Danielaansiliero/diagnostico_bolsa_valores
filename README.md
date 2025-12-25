@@ -2,6 +2,14 @@
 
 Análise histórica visual e educacional de ações da B3 (Bolsa de Valores Brasileira).
 
+## Demo
+
+**Acesse o projeto:** https://diagnostico-bolsa-valores.vercel.app
+
+> **Nota:** O backend está hospedado no plano gratuito do Render, que entra em modo de espera após 15 minutos de inatividade. A primeira requisição pode levar ~50 segundos para "acordar" o servidor. Após isso, as próximas requisições serão rápidas.
+
+---
+
 ## Objetivo
 
 Página que gera um diagnóstico visual de um ativo da bolsa, com parâmetros ajustáveis e dashboard interativo.

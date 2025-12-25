@@ -544,9 +544,39 @@ body::before {
 
 .market-loading {
   text-align: center;
-  padding: 2rem;
+  padding: 3rem 2rem;
   color: var(--accent-cyan);
   font-family: 'Orbitron', sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.market-loading p {
+  font-size: 1.1rem;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+.market-loading .loading-hint {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  letter-spacing: 0.5px;
+}
+
+.loading-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--glass-border);
+  border-top-color: var(--accent-cyan);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
 }
 
 /* Indices Bar */
