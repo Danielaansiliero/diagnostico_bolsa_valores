@@ -16,7 +16,7 @@ export function SearchForm({ onSearch, loading }: SearchFormProps) {
 
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
-  const debounceRef = useRef<NodeJS.Timeout>();
+  const debounceRef = useRef<ReturnType<typeof setTimeout>>();
 
   // Buscar tickers com debounce
   useEffect(() => {
